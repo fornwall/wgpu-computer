@@ -1,2 +1,1 @@
-https://github.com/fornwall/naga
-wgsl-any-all-bool
+naga = { git = "https://github.com/fornwall/naga", branch = "wgsl-any-all-bool" }

@@ -1,2 +1,1 @@
-https://github.com/fornwall/naga
-fix-ldexp
+naga = { git = "https://github.com/fornwall/naga", branch = "fix-ldexp" }

@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e -u
 
+git checkout --quiet Cargo.toml
+
 any_error=false
 
 for input_filename in tests/*.wgsl; do
@@ -8,9 +10,9 @@ for input_filename in tests/*.wgsl; do
     expected_output=$(cat "$expected_filename")
     nagabranch_filename=$(echo "$input_filename" | sed "s/.wgsl/.nagabranch/")
     if [ -f "$nagabranch_filename" ]; then
-        while read -r naga_repo && read -r naga_branch; do
-            printf "[patch.\"https://github.com/gfx-rs/naga\"]\nnaga = { git = \"%s\", branch = \"%s\" }" "$naga_repo" "$naga_branch" >> Cargo.toml
-        done < "$nagabranch_filename"
+        echo '[patch."https://github.com/gfx-rs/naga"]' >> Cargo.toml
+        cat "$nagabranch_filename" >> Cargo.toml
+        echo Cargo.toml
     fi
 
     printf "%s" "Checking $input_filename ..."
