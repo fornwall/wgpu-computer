@@ -55,7 +55,10 @@ jobs:
         sudo apt-get update
         sudo apt install -y libegl1-mesa libgl1-mesa-dri libxcb-xfixes0-dev vulkan-sdk
     - run: cargo run -- sample.wgsl
-    - run: ./run-tests.sh
+    - name: Print adapter info
+      run: cargo run -- --adapter-info
+    - name: Run test suite
+      run: ./run-tests.sh
       shell: bash
 
   actionlint:

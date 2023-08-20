@@ -1,13 +1,10 @@
 fn main() {
-    let file_name = std::env::args().nth(1).expect("No filename");
-    let function_src = std::fs::read_to_string(&file_name).expect("Cannot read file");
-    let result = pollster::block_on(compute(&function_src)).expect("Computation failed");
+    let result = pollster::block_on(compute()).expect("Computation failed");
     println!("{result}");
 }
 
-pub async fn compute(function_src: &str) -> Result<f32, String> {
+pub async fn compute() -> Result<f32, String> {
     let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::default());
-
     let adapter: wgpu::Adapter = instance
         .request_adapter(&wgpu::RequestAdapterOptions {
             power_preference: wgpu::PowerPreference::HighPerformance,
@@ -16,7 +13,6 @@ pub async fn compute(function_src: &str) -> Result<f32, String> {
         })
         .await
         .ok_or("request_adapter failed")?;
-
     let (device, queue) = adapter
         .request_device(
             &wgpu::DeviceDescriptor {
@@ -29,6 +25,19 @@ pub async fn compute(function_src: &str) -> Result<f32, String> {
         .await
         .map_err(|e| format!("request_device failed: {}", e))?;
 
+    let file_name = std::env::args().nth(1).expect("No filename");
+    if file_name == "--adapter-info" {
+        let info = adapter.get_info();
+        println!("Name: {}", info.name);
+        println!("Vendor: {}", info.vendor);
+        println!("Device: {}", info.device);
+        println!("Device type: {:?}", info.device_type);
+        println!("Backend: {}", info.backend.to_str());
+        println!("Driver: {}", info.driver);
+        println!("Driver info: {}", info.driver_info);
+        std::process::exit(0);
+    }
+    let function_src = std::fs::read_to_string(file_name).expect("Cannot read file");
     let entry_point = "_entry_point";
 
     let source = format!(
