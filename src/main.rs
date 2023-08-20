@@ -1,11 +1,11 @@
 fn main() {
     let file_name = std::env::args().nth(1).expect("No filename");
-    let function_body = std::fs::read_to_string(&file_name).expect("Cannot read file");
-    let result = pollster::block_on(compute(&function_body)).expect("Computation failed");
+    let function_src = std::fs::read_to_string(&file_name).expect("Cannot read file");
+    let result = pollster::block_on(compute(&function_src)).expect("Computation failed");
     println!("{result}");
 }
 
-pub async fn compute(function_body: &str) -> Result<f32, String> {
+pub async fn compute(function_src: &str) -> Result<f32, String> {
     let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::default());
 
     let adapter: wgpu::Adapter = instance
@@ -34,11 +34,9 @@ pub async fn compute(function_body: &str) -> Result<f32, String> {
     let source = format!(
         "@group(0) @binding(0) var<storage, read_write> _shader_output: array<f32>;
     @compute @workgroup_size(1) fn {entry_point}(@builtin(global_invocation_id) id: vec3<u32>) {{
-      _shader_output[0] = _compute_function();
+      _shader_output[0] = compute();
     }}
-    fn _compute_function() -> f32 {{
-      {function_body}
-    }}"
+    {function_src}"
     );
 
     let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {

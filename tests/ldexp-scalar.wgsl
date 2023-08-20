@@ -1,3 +1,3 @@
 fn compute() -> f32 {
-  return 1.1;
+  return ldexp(2.0, 2);
 }
