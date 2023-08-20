@@ -1,0 +1,15 @@
+[package]
+name = "wgpu-computer"
+version = "0.1.0"
+edition = "2021"
+description = "Utility to test compute shaders in wgpu"
+license = "MIT"
+repository = "https://github.com/fornwall/wgpu-computer"
+keywords = ["advent-of-code"]
+categories = ["graphics"]
+
+[dependencies]
+bytemuck = { version = "*", features = ["derive"] }
+instant = { version = "*", features = ["wasm-bindgen"] }
+pollster = "*"
+wgpu = { git = "https://github.com/gfx-rs/wgpu", branch = "trunk" }
