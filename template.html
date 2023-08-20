@@ -92,12 +92,13 @@ ${testSource}`;
     if (testActual == testExpected) {
       message += "✅";
     } else {
-      message += `❌ - expected '${testExpected}, got '${testActual}'`;
+      const editorUrl = "https://fornwall.net/webgpu-compute?source=" + encodeURIComponent(testSource);
+      message += `❌ - expected '${testExpected}, got '${testActual}. <a href="${editorUrl}">Edit</a>`;
       numFailures += 1;
     }
-    let p = document.createElement('li');
-    p.textContent = message;
-    resultElement.appendChild(p);
+    let li = document.createElement('li');
+    li.innerHTML = message;
+    resultElement.appendChild(li);
   }
 
   const numOk = testCases.length - numFailures;
