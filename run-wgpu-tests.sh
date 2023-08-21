@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e -u
 
+: "${SHOW_ERRORS:=0}"
+
 git checkout --quiet Cargo.toml
 
 any_error=false
@@ -29,6 +31,9 @@ for input_filename in tests/*.wgsl; do
     if [ "$exit_code" != 0 ]; then
         echo " Error: Failed running - check $error_output_file" 
         any_error=true
+        if [ "$SHOW_ERRORS" = "1" ]; then
+            cat "$error_output_file"
+        fi
     elif [ "$actual_output" = "$expected_output" ]; then
         echo " Ok!"
     else
