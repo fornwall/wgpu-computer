@@ -1,5 +1,5 @@
 # wgpu-computer
-Utility to test compute shaders in both [wgpu](https://github.com/gfx-rs/wgpu) and browsers.
+Utility project to test compute shaders in both [wgpu](https://github.com/gfx-rs/wgpu) and browsers.
 
 ## Usage
 ```sh
