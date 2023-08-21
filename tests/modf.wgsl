@@ -8,12 +8,12 @@ fn compute() -> f32 {
   let whole_only = modf(1.5).whole;
 
   // 0.5 * 10 = 5
-  var result = fract_and_whole.fract * 10;
+  var result = fract_and_whole.fract * 10.;
   // 1.0 * 9 = 9
-  result += fract_and_whole.whole * 9;
+  result += fract_and_whole.whole * 9.;
   // 0.5 * 8 = 4
-  result += fract_only * 8;
+  result += fract_only * 8.;
   // 1.0 * 7 = 7
-  result += fract_and_whole.whole * 7;
+  result += fract_and_whole.whole * 7.;
   return result;
 }
