@@ -19,7 +19,11 @@ The [tests/](tests/) directory contains a test suite. Each `${NAME}.wgsl` file t
 Optionally a `${NAME}.nagabranch` file contains information about a specific naga branch which will be used for the test.
 
 ## Running test suite against wgpu
-Execute `./run-tests.sh`.
+Execute `./run-wgpu-tests.sh`.
+
+It respects the `WGPU_BACKEND` environment variable, so run e.g. `WGPU_BACKEND=gl ./run-wgpu-tests.sh` to run against the OpenGL backend.
+
+Information about the wgpu adapter used will be printed to stdout.
 
 ## Running test suite against a browser
 Execute `./run-browser-tests.py`. That script generates and opens a self-contained `test.html` file.
