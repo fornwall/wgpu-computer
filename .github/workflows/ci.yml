@@ -57,6 +57,8 @@ jobs:
     - run: cargo run -- sample.wgsl
     - name: Print adapter info
       run: cargo run -- --adapter-info
+    - run: WGPU_BACKEND=gl ./run-wgpu-tests.sh
+      if: matrix.os == 'ubuntu-latest'
     - name: Run test suite
       run: SHOW_ERRORS=1 ./run-wgpu-tests.sh
       shell: bash
