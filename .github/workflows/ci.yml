@@ -55,8 +55,6 @@ jobs:
         sudo apt-get update
         sudo apt install -y libegl1-mesa libgl1-mesa-dri libxcb-xfixes0-dev vulkan-sdk
     - run: cargo run -- sample.wgsl
-    - name: Print adapter info
-      run: cargo run -- --adapter-info
     - name: Run test suite (gl)
       run: WGPU_BACKEND=gl ./run-wgpu-tests.sh
       if: matrix.os == 'ubuntu-latest'
