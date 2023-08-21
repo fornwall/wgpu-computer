@@ -10,6 +10,8 @@ any_error=false
 rm -Rf output/
 mkdir -p output/tests/
 
+cargo run -- --adapter-info
+
 for input_filename in tests/*.wgsl; do
     expected_filename=$(echo "$input_filename" | sed "s/.wgsl/.expected/")
     expected_output=$(cat "$expected_filename")
