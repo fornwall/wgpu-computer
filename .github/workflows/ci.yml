@@ -58,7 +58,7 @@ jobs:
     - name: Print adapter info
       run: cargo run -- --adapter-info
     - name: Run test suite
-      run: ./run-tests.sh
+      run: ./run-wgpu-tests.sh
       shell: bash
 
   actionlint:
