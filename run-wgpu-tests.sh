@@ -14,6 +14,7 @@ cargo run -- --adapter-info
 
 for input_filename in tests/*.wgsl; do
     expected_filename=$(echo "$input_filename" | sed "s/.wgsl/.expected/")
+    expected_failure=$(echo "$input_filename" | sed "s/.wgsl/.shouldfail/")
     expected_output=$(cat "$expected_filename")
     nagabranch_filename=$(echo "$input_filename" | sed "s/.wgsl/.nagabranch/")
     if [ -f "$nagabranch_filename" ]; then
@@ -31,16 +32,30 @@ for input_filename in tests/*.wgsl; do
     git checkout --quiet Cargo.toml
 
     if [ "$exit_code" != 0 ]; then
-        echo " Error: Failed running - check $error_output_file" 
-        any_error=true
+        printf " Error: Failed running - check %s" "$error_output_file" 
         if [ "$SHOW_ERRORS" = "1" ]; then
             cat "$error_output_file"
         fi
+        if [ -f "$expected_failure" ]; then
+            echo " (error was expected)"
+        else
+            echo ""
+            any_error=true
+        fi
     elif [ "$actual_output" = "$expected_output" ]; then
-        echo " Ok!"
+        if [ -f "$expected_failure" ]; then
+            echo " Error: Expected to fail"
+            any_error=true
+        else
+            echo " Ok!"
+        fi
     else
-        echo " Error: Expected '$expected_output' - got '$actual_output'"
-        any_error=true
+        if [ -f "$expected_failure" ]; then
+            echo " (error was expected)"
+        else
+            echo " Error: Expected '$expected_output' - got '$actual_output'"
+            any_error=true
+        fi
     fi
 done
 
