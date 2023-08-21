@@ -4,7 +4,11 @@ fn main() {
 }
 
 pub async fn compute() -> Result<f32, String> {
-    let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::default());
+    let backends = wgpu::util::backend_bits_from_env().unwrap_or(wgpu::Backends::all());
+    let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
+        backends,
+        ..Default::default()
+    });
     let adapter: wgpu::Adapter = instance
         .request_adapter(&wgpu::RequestAdapterOptions {
             power_preference: wgpu::PowerPreference::HighPerformance,
