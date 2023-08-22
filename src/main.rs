@@ -132,5 +132,5 @@ pub async fn compute() -> Result<f32, String> {
     instance.poll_all(true);
     let result_buffer_range = result_buffer_slice.get_mapped_range();
     let result_buffer_array: &[f32] = bytemuck::cast_slice(&result_buffer_range);
-    return Ok(result_buffer_array[0]);
+    Ok(result_buffer_array[0])
 }
