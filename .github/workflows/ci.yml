@@ -72,3 +72,13 @@ jobs:
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
       - name: Check workflow files
         run: ${{ steps.get_actionlint.outputs.executable }} -color
+
+
+  generate-webpage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - run: DONTOPEN=1 ./run-browser-tests.py

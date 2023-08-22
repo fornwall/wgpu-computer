@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import json
-from os import listdir
+from os import listdir, environ
 from os.path import isfile, join, abspath
 import webbrowser
 
@@ -32,5 +32,6 @@ with open(f'test.html','wt') as file:
 
 test_html_path = abspath("test.html")
 print(test_html_path)
-webbrowser.open('file://' + test_html_path, new=True)
+if "DONTOPEN" not in environ:
+    webbrowser.open('file://' + test_html_path, new=True)
 
