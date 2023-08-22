@@ -19,6 +19,13 @@ function fail(message) {
   alert(message);
 }
 
+function openTestCase(index) {
+    const testCase = testCases[index];
+    const testSource = testCase.source;
+    const editorUrl = "https://fornwall.net/webgpu-compute?source=" + encodeURIComponent(testSource);
+    window.location.href = editorUrl;
+}
+
 async function compute() {
   const adapter = await navigator.gpu?.requestAdapter();
   const device = await adapter?.requestDevice();
@@ -88,12 +95,12 @@ ${testSource}`;
     const testActual = result[0];
     resultBuffer.unmap();
 
-    let message = `${testName}: `;
+    let message = `<a data-testcase="${i}" href="#">${testName}</a>: `;
     if (testActual == testExpected) {
       message += "✅";
     } else {
       const editorUrl = "https://fornwall.net/webgpu-compute?source=" + encodeURIComponent(testSource);
-      message += `❌ - expected '${testExpected}, got '${testActual}. <a href="${editorUrl}">Edit</a>`;
+      message += `❌ - expected '${testExpected}, got '${testActual}`;
       numFailures += 1;
     }
     let li = document.createElement('li');
@@ -105,6 +112,16 @@ ${testSource}`;
   const message = `Done - ${numOk} / ${testCases.length} tests ok`;
   document.querySelector('h1').textContent = message;
   document.title = message;
+
+  document.querySelectorAll('a').forEach((a) => {
+    if (a.dataset.testcase) {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('a=', a, 'e=', e);
+        openTestCase(a.dataset.testcase);
+      });
+    }
+  });
 }
 
 compute();
