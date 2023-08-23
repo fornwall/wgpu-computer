@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 set -e -u
 
 : "${SHOW_ERRORS:=0}"
+TEST_FILTER=""
+if [ $# = 1 ]; then
+  TEST_FILTER="$1"
+  echo "[INFO] Applying test filter: '$TEST_FILTER'"
+fi
 
 git checkout --quiet Cargo.toml
 
@@ -13,6 +18,10 @@ mkdir -p output/tests/
 cargo run -- --adapter-info
 
 for input_filename in tests/*.wgsl; do
+    if [[ "$input_filename" != *"$TEST_FILTER"* ]]; then
+        continue
+    fi
+
     expected_filename=$(echo "$input_filename" | sed "s/.wgsl/.expected/")
     expected_failure=$(echo "$input_filename" | sed "s/.wgsl/.shouldfail/")
     expected_output=$(cat "$expected_filename")
