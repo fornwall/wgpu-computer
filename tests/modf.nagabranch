@@ -1,1 +1,1 @@
-naga = { git = "https://github.com/fornwall/naga", branch = "modf-and-frexp" }
+naga = { git = "https://github.com/fornwall/naga", branch = "modf-and-frexp-struct" }
