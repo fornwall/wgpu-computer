@@ -7,6 +7,9 @@ fn compute() -> f32 {
   // Sets whole_only to 1.0
   let whole_only = modf(1.5).whole;
 
+  // Infers result type
+  let fract_and_whole_vec = modf(vec2(1.5, 1.5));
+
   // 0.5 * 10 = 5
   var result = fract_and_whole.fract * 10.;
   // 1.0 * 9 = 9
@@ -15,5 +18,7 @@ fn compute() -> f32 {
   result += fract_only * 8.;
   // 1.0 * 7 = 7
   result += fract_and_whole.whole * 7.;
+  // 1.0 * 7 = 7
+  result += fract_and_whole_vec.whole.x * 7.;
   return result;
 }
