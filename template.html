@@ -22,7 +22,7 @@ function fail(message) {
 function openTestCase(index) {
     const testCase = testCases[index];
     const testSource = testCase.source;
-    const editorUrl = "https://fornwall.net/webgpu-compute?source=" + encodeURIComponent(testSource);
+    const editorUrl = "https://compute.fornwall.net?source=" + encodeURIComponent(testSource);
     window.location.href = editorUrl;
 }
 
@@ -99,7 +99,6 @@ ${testSource}`;
     if (testActual == testExpected) {
       message += "✅";
     } else {
-      const editorUrl = "https://fornwall.net/webgpu-compute?source=" + encodeURIComponent(testSource);
       message += `❌ - expected '${testExpected}, got '${testActual}`;
       numFailures += 1;
     }
