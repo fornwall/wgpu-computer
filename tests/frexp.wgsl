@@ -1,3 +1,8 @@
+fn test(input: f32, expected_fract: f32, expected_exp: i32) -> f32 {
+  let res = frexp(input);
+  return select(1000., 0., res.fract == expected_fract && res.exp == expected_exp);
+}
+
 fn compute() -> f32 {
   // https://www.w3.org/TR/WGSL/#example-450e6187
   // res = fraction * 2^exponent
@@ -17,6 +22,18 @@ fn compute() -> f32 {
 
   result += frexp(-3.0).fract * 4.0; // -3
   result += f32(frexp(-3.0).exp); // 2
+
+  // CTS, src/unittests/maths.spec.ts
+  result += test(0., 0., 0);
+  result += test(-0., -0., 0);
+  result += test(0.5, 0.5, 0);
+  result += test(-0.5, -0.5, 0);
+  result += test(1., 0.5, 1);
+  result += test(-1., -0.5, 1);
+  result += test(2., 0.5, 2);
+  result += test(-2., -0.5, 2);
+  result += test(10000., 0.6103515625, 14);
+  result += test(-10000., -0.6103515625, 14);
 
   return result;
 }
