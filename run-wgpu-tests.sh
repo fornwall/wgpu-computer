@@ -5,7 +5,6 @@ set -e -u
 TEST_FILTER=""
 if [ $# = 1 ]; then
   TEST_FILTER="$1"
-  echo "[INFO] Applying test filter: '$TEST_FILTER'"
 fi
 
 git checkout --quiet Cargo.toml
@@ -15,8 +14,11 @@ any_error=false
 rm -Rf output/
 mkdir -p output/tests/
 
-cargo run -- --adapter-info
+echo "Adapter information"
+cargo run --quiet -- --adapter-info
+echo
 
+echo "Test runs"
 for input_filename in tests/*.wgsl; do
     if [[ "$input_filename" != *"$TEST_FILTER"* ]]; then
         continue
