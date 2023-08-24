@@ -19,6 +19,9 @@ fn compute() -> f32 {
   // 1.0 * 7 = 7
   result += fract_and_whole.whole * 7.;
   // 1.0 * 7 = 7
-  result += fract_and_whole_vec.whole.x * 7.;
+  result += fract_and_whole_vec.whole.y * 7.;
+  result += round(modf(-11.9).fract * 10.); // -9
+  result += round(modf(-11.9).whole); // -11
+
   return result;
 }

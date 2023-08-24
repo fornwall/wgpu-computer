@@ -12,7 +12,11 @@ fn compute() -> f32 {
   result += fraction_and_exponent.fract * 8.; // 6
   result += f32(fraction_and_exponent.exp) * 7.; // 14
 
-  result += f32(frexp(vec2(10.5, 10.5)).exp.x); // 4
+  result += f32(frexp(vec2(10.5, 10.5)).exp.y); // 4
   result += f32(frexp(10.5).exp); // 4
+
+  result += frexp(-3.0).fract * 4.0; // -3
+  result += f32(frexp(-3.0).exp); // 2
+
   return result;
 }
