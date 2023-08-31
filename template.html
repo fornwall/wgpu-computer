@@ -22,7 +22,7 @@ function fail(message) {
 function openTestCase(index) {
     const testCase = testCases[index];
     const testSource = testCase.source;
-    const editorUrl = "https://compute.fornwall.net?source=" + encodeURIComponent(testSource);
+    const editorUrl = "https://compute.fornwall.net#source=" + encodeURIComponent(testSource);
     window.location.href = editorUrl;
 }
 
