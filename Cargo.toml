@@ -12,7 +12,7 @@ categories = ["graphics"]
 bytemuck = { version = "*", features = ["derive"] }
 instant = { version = "*", features = ["wasm-bindgen"] }
 pollster = "*"
-wgpu = { git = "https://github.com/gfx-rs/wgpu", branch = "trunk" }
+wgpu = { git = "https://github.com/fornwall/wgpu", branch = "update-naga" }
 
 # [patch."https://github.com/gfx-rs/naga"]
 # naga = { path = "../naga" }
