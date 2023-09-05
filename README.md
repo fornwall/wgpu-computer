@@ -6,7 +6,7 @@ Utility project to test compute shaders in both [wgpu](https://github.com/gfx-rs
 cargo run -- sample.wgsl
 ```
 
-The file should contain the body of a `fn compute() -> f32 { <body> }` function, as in `return 1.1;`.
+The file must contain the body of a `fn compute() -> f32 { <body> }` function, as in `return 1.1;`.
 
 The result of that computation will be output to stdout.
 
