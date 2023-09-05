@@ -24,6 +24,7 @@ for input_filename in tests/*.wgsl; do
         continue
     fi
 
+    disabled_file=$(echo "$input_filename" | sed "s/.wgsl/.nagadisabled/")
     expected_filename=$(echo "$input_filename" | sed "s/.wgsl/.expected/")
     expected_failure=$(echo "$input_filename" | sed "s/.wgsl/.shouldfail/")
     expected_output=$(cat "$expected_filename")
@@ -34,6 +35,12 @@ for input_filename in tests/*.wgsl; do
     fi
 
     printf "%s" "- $input_filename ..."
+
+    if [ -f "$disabled_file" ]; then
+        echo " skipping since disabled"
+        continue
+    fi
+
     set +e
     error_output_file=output/${input_filename}.stderr
     actual_output=$(cargo run -q -- "$input_filename" 2> "$error_output_file")
