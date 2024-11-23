@@ -23,6 +23,7 @@ pub async fn compute() -> Result<f32, String> {
                 required_features: wgpu::Features::empty(),
                 required_limits: wgpu::Limits::default(),
                 label: None,
+                memory_hints: Default::default(),
             },
             None,
         )
@@ -110,7 +111,9 @@ pub async fn compute() -> Result<f32, String> {
         label: None,
         layout: Some(&compute_pipeline_layout),
         module: &shader,
-        entry_point,
+        entry_point: Some(entry_point),
+        compilation_options: Default::default(),
+        cache: Default::default(),
     });
 
     let mut command_encoder =
